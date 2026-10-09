@@ -1,0 +1,80 @@
+.loader_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    /* Adjust as needed */
+}
+
+.dot_loader {
+    position: relative;
+    width: 60px;
+    height: 60px;
+}
+
+.dot_loader span {
+    position: absolute;
+    width: 20%;
+    /* Dot size relative to container */
+    height: 20%;
+    background: #4a5568;
+    /* Darker gray like in image */
+    border-radius: 50%;
+    left: 40%;
+    top: 40%;
+    /* Sabhi dots ko circle mein rotate karne ke liye */
+    transform-origin: center 150%;
+    animation: pulse 1.2s linear infinite;
+}
+
+/* Positioning & Animation Delays */
+.dot_loader span:nth-child(1) {
+    transform: rotate(0deg) translateY(-150%);
+    animation-delay: 0s;
+}
+
+.dot_loader span:nth-child(2) {
+    transform: rotate(45deg) translateY(-150%);
+    animation-delay: 0.15s;
+}
+
+.dot_loader span:nth-child(3) {
+    transform: rotate(90deg) translateY(-150%);
+    animation-delay: 0.3s;
+}
+
+.dot_loader span:nth-child(4) {
+    transform: rotate(135deg) translateY(-150%);
+    animation-delay: 0.45s;
+}
+
+.dot_loader span:nth-child(5) {
+    transform: rotate(180deg) translateY(-150%);
+    animation-delay: 0.6s;
+}
+
+.dot_loader span:nth-child(6) {
+    transform: rotate(225deg) translateY(-150%);
+    animation-delay: 0.75s;
+}
+
+.dot_loader span:nth-child(7) {
+    transform: rotate(270deg) translateY(-150%);
+    animation-delay: 0.9s;
+}
+
+.dot_loader span:nth-child(8) {
+    transform: rotate(315deg) translateY(-150%);
+    animation-delay: 1.05s;
+}
+
+/* Animation: Opacity changes to create the 'spinning' effect */
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.15;
+    }
+}

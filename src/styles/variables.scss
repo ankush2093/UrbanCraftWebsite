@@ -1,0 +1,30 @@
+/* define color variables */
+
+:root {
+  --color-primary: #010a1a; // Deep Navy
+  --color-secondary: #fb7505; // Vibrant Red
+  --color-text-muted: #abb8c3; // Muted Gray for footers
+  --color-white: #ffffff;
+  --soft-bg:
+    radial-gradient(
+      circle at 10% 20%,
+      rgba(34, 197, 94, 0.06),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(249, 115, 22, 0.06),
+      transparent 40%
+    ),
+    linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-outfit), var(--font-poppins), sans-serif !important;
+}

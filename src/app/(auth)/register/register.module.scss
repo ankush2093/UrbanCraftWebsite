@@ -1,0 +1,293 @@
+.registerSection {
+  background: #f0f2f5;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 40px 0px;
+  font-family: system-ui, sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  align-items: center;
+}
+
+.colLeft {
+  padding-right: 20px;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border: 1px dashed #086431;
+}
+
+.logo img {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+}
+
+.bgImg {
+  max-width: 80%;
+}
+
+.heroText {
+  font-size: clamp(32px, 4vw, 56px);
+  font-weight: 800;
+  line-height: 1.1;
+  text-align: right;
+
+  span {
+    color: #086431;
+  }
+}
+
+
+.colRight {
+  max-width: 432px;
+  margin: auto;
+}
+
+.registerCard {
+  background: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
+    0 8px 16px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    font-size: 32px;
+    margin-bottom: 4px;
+  }
+
+  p {
+    color: #606770;
+    margin-bottom: 16px;
+  }
+}
+
+.divider {
+  height: 1px;
+  background: #dadde1;
+  margin-bottom: 16px;
+}
+
+.nameRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.input {
+  background: #f5f6f7;
+  border: 1px solid #dddfe2;
+  border-radius: 6px;
+  padding: 11px;
+  font-size: 15px;
+  outline: none;
+
+  &:focus {
+    border-color: #086431;
+    background: #fff;
+  }
+}
+
+.full {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.emailDisplay {
+  font-size: 14px;
+  color: #606770;
+  margin-bottom: 12px;
+  word-break: break-all;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+
+  button {
+    flex: 1;
+  }
+}
+
+.verifyBtn {
+  background: #086431;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 12px;
+  cursor: pointer;
+
+  &:hover {
+    background: linear-gradient(#5e9c4d, #4d7a39);
+  }
+}
+
+.backBtn {
+  background: #f5f6f7;
+  color: #606770;
+  border: 1px solid #dddfe2;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 12px;
+  cursor: pointer;
+
+  &:hover {
+    background: #e9ebee;
+  }
+}
+
+.signUpBtn {
+  width: 100%;
+  background: #086431;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 12px;
+  cursor: pointer;
+
+  &:hover {
+    background: linear-gradient(#5e9c4d, #4d7a39);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .row {
+    grid-template-columns: 1fr;
+    /* Stack columns vertically */
+    text-align: center;
+  }
+
+  .colLeft {
+    order: 2;
+    /* Move image section to bottom */
+    padding-right: 0;
+    margin-top: 30px;
+  }
+
+  .colRight {
+    order: 1;
+    /* Move form to top */
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .heroText {
+    text-align: center;
+  }
+
+  .nameRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+.phone_input_wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 52px;
+  border: 1px solid #dddfe2;
+  border-radius: 5px;
+  background: #fff;
+  overflow: hidden;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 10px;
+}
+
+
+.phone_input_wrapper:focus-within {
+  border-color: #086431;
+}
+
+.country_box {
+  width: 110px;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f9fafb;
+  border-right: 1px solid #e5e7eb;
+}
+
+.selected_display {
+  font-size: 14px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;
+
+}
+
+.country_box select {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 14px;
+}
+
+.phone_input {
+  flex: 1;
+  height: 100%;
+  border: none;
+  padding: 0 12px;
+  font-size: 15px;
+  outline: none;
+}
+
+.passwordWrapper {
+  position: relative;
+}
+
+.passwordInput {
+  padding-right: 42px;
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 12px;
+  top: 40%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #606770;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
