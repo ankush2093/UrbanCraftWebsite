@@ -38,11 +38,11 @@ export interface GoogleLoginResponse {
 export interface RegisterRequest {
   email: string;
   password: string;
-  userType: string;
   fullName: string;
   phoneNumber: string;
-  gender: string;
-  dateOfBirth: string;
+  gender?: string;
+  userType?: string;
+  dateOfBirth?: string;
 }
 
 export interface RegisterResponse {

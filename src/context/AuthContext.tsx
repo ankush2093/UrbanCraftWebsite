@@ -157,7 +157,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     document.cookie = 'auth_token=; path=/; max-age=0';
     setUser(null);
     setHasToken(false);
-    router.push('/login');
+    if (typeof window !== 'undefined') {
+      const pathname = window.location.pathname;
+      const isProtected = ['/profile', '/payment', '/chat'].some((p) => pathname.startsWith(p));
+      if (isProtected) {
+        router.push('/');
+      }
+    } else {
+      router.push('/');
+    }
   };
 
   // isAuthenticated should be true if we have a token OR user data

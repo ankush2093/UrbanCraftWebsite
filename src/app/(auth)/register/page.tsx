@@ -15,9 +15,7 @@ export default function RegisterPage() {
     phoneNumber: "",
     password: "",
     confirmPassword: "",
-    userType: "patient",
     gender: "",
-    dateOfBirth: "",
     countryCode: "+91",
   });
 
@@ -82,27 +80,59 @@ export default function RegisterPage() {
     e.preventDefault();
     setError(null);
     setSuccessMessage(null);
-    setLoading(true);
 
-    if (registerData.password !== registerData.confirmPassword) {
-      setError("Password & Confirm Password do not match");
-      setLoading(false);
+    const fullName = registerData.fullName.trim();
+    const email = registerData.email.trim();
+    const phoneNumber = registerData.phoneNumber.trim();
+
+    if (!fullName) {
+      setError("Please enter your full name");
       return;
     }
 
+    if (!email) {
+      setError("Please enter your email address");
+      return;
+    }
+
+    if (!phoneNumber) {
+      setError("Please enter your phone number");
+      return;
+    }
+
+    if (!registerData.password) {
+      setError("Please enter a password");
+      return;
+    }
+
+    if (registerData.password.length < 6) {
+      setError("Password must be at least 6 characters long");
+      return;
+    }
+
+    if (registerData.password !== registerData.confirmPassword) {
+      setError("Password & Confirm Password do not match");
+      return;
+    }
+
+    setLoading(true);
+
     try {
-      // Prepare the registration data according to API requirements
-      const registrationPayload = {
-        email: registerData.email,
+      // Prepare the registration data according to server SignupDto
+      const registrationPayload: any = {
+        fullName,
+        email,
+        phoneNumber: `${registerData.countryCode}${phoneNumber}`,
         password: registerData.password,
-        userType: registerData.userType,
-        fullName: registerData.fullName,
-
-        phoneNumber: `${registerData.countryCode}${registerData.phoneNumber}`,
-
-        gender: registerData.gender,
-        dateOfBirth: registerData.dateOfBirth,
       };
+
+      // Only send gender if valid value is selected
+      if (
+        registerData.gender &&
+        ["Male", "Female", "Other"].includes(registerData.gender)
+      ) {
+        registrationPayload.gender = registerData.gender;
+      }
 
       // Call the register API
       const response = await registerUser(registrationPayload).unwrap();
@@ -114,10 +144,9 @@ export default function RegisterPage() {
       );
 
       // Set the email in verification data
-
       setVerificationData((prev) => ({
         ...prev,
-        email: registerData.email,
+        email: email,
       }));
 
       // Move to verification step
@@ -126,11 +155,18 @@ export default function RegisterPage() {
       console.error("Registration error:", err);
 
       // Extract error message from API response
-      const errorMessage =
-        err?.data?.message ||
-        err?.data?.error ||
-        err?.message ||
-        "Registration failed. Please try again.";
+      let errorMessage = "Registration failed. Please try again.";
+      if (err?.data?.message) {
+        if (Array.isArray(err.data.message)) {
+          errorMessage = err.data.message.join(", ");
+        } else {
+          errorMessage = err.data.message;
+        }
+      } else if (err?.data?.error) {
+        errorMessage = err.data.error;
+      } else if (err?.message) {
+        errorMessage = err.message;
+      }
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -252,15 +288,23 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      const registrationPayload = {
-        email: registerData.email,
+      const fullName = registerData.fullName.trim();
+      const email = registerData.email.trim();
+      const phoneNumber = registerData.phoneNumber.trim();
+
+      const registrationPayload: any = {
+        fullName,
+        email,
+        phoneNumber: `${registerData.countryCode}${phoneNumber}`,
         password: registerData.password,
-        userType: registerData.userType,
-        fullName: registerData.fullName,
-        phoneNumber: `${registerData.countryCode}${registerData.phoneNumber}`,
-        gender: registerData.gender,
-        dateOfBirth: registerData.dateOfBirth,
       };
+
+      if (
+        registerData.gender &&
+        ["Male", "Female", "Other"].includes(registerData.gender)
+      ) {
+        registrationPayload.gender = registerData.gender;
+      }
 
       const response = await registerUser(registrationPayload).unwrap();
 
@@ -272,11 +316,18 @@ export default function RegisterPage() {
       setResendCooldown(60);
     } catch (err: any) {
       console.error("Resend OTP error:", err);
-      const errorMessage =
-        err?.data?.message ||
-        err?.data?.error ||
-        err?.message ||
-        "Unable to resend verification code. Please try again.";
+      let errorMessage = "Unable to resend verification code. Please try again.";
+      if (err?.data?.message) {
+        if (Array.isArray(err.data.message)) {
+          errorMessage = err.data.message.join(", ");
+        } else {
+          errorMessage = err.data.message;
+        }
+      } else if (err?.data?.error) {
+        errorMessage = err.data.error;
+      } else if (err?.message) {
+        errorMessage = err.message;
+      }
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -298,10 +349,10 @@ export default function RegisterPage() {
           <div className={styles.colLeft}>
             <div className={styles.leftContent}>
               <div className={styles.logo}>
-                <img src="img/logo-2.jpeg" alt="Logo" />
+                <img src="img/logo.png" alt="Logo" />
               </div>
 
-              <img className={styles.bgImg} src="img/register.png" alt="hero" />
+              <img className={styles.bgImg} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7PDpxrRn_EvX1KwMiCmK40XfxKQhzldMLHYT9VOKrEA&s=10" alt="hero" />
 
               <h1 className={styles.heroText}>
                 Explore <br />
@@ -416,13 +467,12 @@ export default function RegisterPage() {
                     name="gender"
                     value={registerData.gender}
                     onChange={handleChange}
-                    required
                     className={`${styles.input} ${styles.full}`}
                   >
-                    <option value="">Select Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
+                    <option value="">Select Gender (Optional)</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
                   </select>
 
                   {/* Password */}

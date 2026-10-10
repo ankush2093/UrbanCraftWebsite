@@ -238,6 +238,13 @@ function BookingWizardContent() {
   };
 
   const handleConfirmBooking = async () => {
+    if (!isAuthenticated) {
+      toast.info("Please login to complete your booking");
+      const redirectUrl = `/book/${serviceSlug}?option=${selectedOption.id}`;
+      router.push(`/login?redirect=${encodeURIComponent(redirectUrl)}`);
+      return;
+    }
+
     const selectedAddr = addresses.find((a) => a.id === selectedAddressId) || addresses[0];
     if (!selectedAddr) {
       toast.error("Please add or select a service address in Patna");

@@ -71,10 +71,15 @@ const baseQueryWithAuthHandler: BaseQueryFn<
     if (!isAuthEndpoint && typeof window !== "undefined") {
       localStorage.removeItem("auth_token");
       localStorage.removeItem("user_data");
+      document.cookie = 'auth_token=; path=/; max-age=0';
 
-      // Redirect to login only if not already on login page
-      if (window.location.pathname !== "/login") {
-        window.location.href = "/login";
+      const currentPath = window.location.pathname;
+      const protectedPrefixes = ['/profile', '/payment', '/chat'];
+      const isProtectedRoute = protectedPrefixes.some((p) => currentPath.startsWith(p));
+
+      // Only redirect to login if user was actively on a protected page
+      if (isProtectedRoute && currentPath !== "/login") {
+        window.location.href = `/login?redirect=${encodeURIComponent(currentPath)}`;
       }
     }
   }
